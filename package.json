@@ -1,0 +1,33 @@
+{
+  "name": "img-search-api",
+  "version": "0.0.1",
+  "description": "API that accepts image search string and returns JSON formatted links and descriptions of images",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamtarrant/img-search-api.git"
+  },
+  "keywords": [
+    "image",
+    "search"
+  ],
+  "author": "Adam Tarrant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamtarrant/img-search-api/issues"
+  },
+  "homepage": "https://github.com/adamtarrant/img-search-api#readme",
+
+  "dependencies": {
+    "express": "4.16.2",
+    "mongodb": "^3.0.2"
+  },
+
+  "engines": {
+    "node": "9.5.0"
+  }
+
+}
