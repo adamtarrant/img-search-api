@@ -19,19 +19,36 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 ///Route handlers
 app.get('/api/imgsearch', (req, res) => {
-    console.log(req.query.q);
+    let queryObj = {
+        searchStr: req.query.q,
+        count: req.query.count,
+        offset: req.query.offset
+    };
+    console.log(queryObj);
+    
+    recordSearchInDb(queryObj.searchStr);
 
-    let responseJson;
-
-    bingImageSearch(req.query.q)
+    bingImageSearch(queryObj)
         .then(bingResponseHandler)
         .then(formattedBingRes => {
-            responseJson = formattedBingRes;
-            //console.log('the response JSON is ' + responseJson);
-            res.end(responseJson);
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(formattedBingRes);
         })
-        .catch(error => console.log(error));
+        .catch(error => {throw error});
 
+});
+
+app.get('/api/recent', (req, res) => {
+
+    returnRecentSearches().then(recentSearches => {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(recentSearches);
+    }).catch(error => {throw error});
+});
+
+app.all('/*', (req, res) => {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Page not found. Please submit shortened url or use /create/<url> to create a shortened url");
 });
 
 //Listening
@@ -39,19 +56,22 @@ app.listen(8080);
 https.createServer(sslOptions, app).listen(443);
 
 //Named function declarations
-function bingImageSearch(imgSearchQuery) {
+function bingImageSearch(imgQueryObj) {
     return new Promise((resolve, reject) => {
+        let queryStringPath = config.apiEndPoint + '?q=' + encodeURIComponent(imgQueryObj.searchStr);
+        if(imgQueryObj.count !== undefined && !isNaN(imgQueryObj.count)){queryStringPath += '&count=' + imgQueryObj.count}
+        if(imgQueryObj.offset !== undefined && !isNaN(imgQueryObj.offset)){queryStringPath += '&offset=' + imgQueryObj.offset}
+
         let requestParams = {
             method: 'GET',
             hostname: config.apiHost,
-            path: config.apiEndPoint + '?q=' + encodeURIComponent(imgSearchQuery),
+            path: queryStringPath,
             headers: {
                 'Ocp-Apim-Subscription-Key': config.apiKey1
             }
         };
 
         let req = https.request(requestParams, (bingResponse) => {
-            //console.log('about to make request or ' + bingResponse);
             if (bingResponse) {
                 resolve(bingResponse);
             } else {
@@ -64,23 +84,18 @@ function bingImageSearch(imgSearchQuery) {
 
 function bingResponseHandler(bingResponse) {
     return new Promise((resolve, reject) => {
-        //console.log('the promise returned ' + bingResponse);
-
         let bingResultsObj = '';
         bingResponse.on('data', d => {
             bingResultsObj += d;
         });
         bingResponse.on('end', () => {
-            //console.log('\nRelevant Headers:\n');
+            console.log('\nRelevant Headers:\n');
             for (var header in bingResponse.headers) {
                 // header keys are lower-cased by Node.js
                 if (header.startsWith("bingapis-") || header.startsWith("x-msedge-")) {
                     console.log(header + ": " + bingResponse.headers[header]);
                 }
             }
-            //bingResultsObj = JSON.stringify(JSON.parse(bingResultsObj), null, '  ');
-            //console.log('\nJSON Response:\n');
-            //console.log(bingResultsObj);
             bingResultsObj = JSON.parse(bingResultsObj);
 
             let bingResultsArr = bingResultsObj.value;
@@ -105,7 +120,31 @@ function bingResponseHandler(bingResponse) {
     });
 }
 
-
 function recordSearchInDb(imgSearchQuery) {
+    mongo.connect(config.mongoUri, (err, db) => {
+        if (err) throw err;
+        let dbo = db.db(config.dbName);
+        dbo.collection(config.collectionName).insertOne({search: imgSearchQuery, dateTime: Date.now()}, (err,result) =>{
+            if (err) throw err;
+            db.close();
+        });
+    });
+}
 
+function returnRecentSearches(){
+    return new Promise((resolve, reject) => {
+    let recentSearchArr = [];
+    mongo.connect(config.mongoUri, (err, db) => {
+        if (err) {reject(err)}
+        let dbo = db.db(config.dbName);
+        dbo.collection(config.collectionName).find({}, {fields: {_id: 0}}).sort({
+            'dateTime': -1
+        }).limit(10).forEach(doc => recentSearchArr.push(doc), (err) => {
+            if (err) {reject(err)}
+            resolve(JSON.stringify(recentSearchArr, null, "\t"));
+            db.close();
+        });
+    });
+
+    });
 }
