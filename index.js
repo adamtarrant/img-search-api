@@ -73,8 +73,6 @@ function bingImageSearch(imgQueryObj) {
         console.log('about to make http request to bing');
         let req = http.request(requestParams, (bingResponse) => {
             console.log('entered callback for http request');
-
-        let req = http.request(requestParams, (bingResponse) => {
             if (bingResponse) {
                 resolve(bingResponse);
             } else {
@@ -83,7 +81,6 @@ function bingImageSearch(imgQueryObj) {
             }
         });
         req.end();
-    });
     });
 }
 
