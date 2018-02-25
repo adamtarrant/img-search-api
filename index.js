@@ -1,6 +1,6 @@
 //NPM and Node Modules
 const express = require('express');
-//const https = require('https');
+const http = require('http');
 const mongo = require('mongodb').MongoClient;
 const fs = require('fs');
 const path = require('path');
@@ -70,7 +70,7 @@ function bingImageSearch(imgQueryObj) {
             }
         };
 
-        let req = https.request(requestParams, (bingResponse) => {
+        let req = http.request(requestParams, (bingResponse) => {
             if (bingResponse) {
                 resolve(bingResponse);
             } else {
