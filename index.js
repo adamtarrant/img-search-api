@@ -85,6 +85,7 @@ function bingImageSearch(imgQueryObj) {
 }
 
 function bingResponseHandler(bingResponse) {
+    console.log('bing response is' + bingResponse);
     return new Promise((resolve, reject) => {
         let bingResultsObj = '';
         bingResponse.on('data', d => {
@@ -98,8 +99,10 @@ function bingResponseHandler(bingResponse) {
                     console.log(header + ": " + bingResponse.headers[header]);
                 }
             }
-            bingResultsObj = JSON.parse(bingResultsObj);
 
+            bingResultsObj = JSON.parse(bingResultsObj);
+            
+            console.log('bing results obj is' + bingResultsObj.value);
             let bingResultsArr = bingResultsObj.value;
             let imgSearchResults = [];
             
