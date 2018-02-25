@@ -1,14 +1,13 @@
 //NPM and Node Modules
 const express = require('express');
-const https = require('https');
+//const https = require('https');
 const mongo = require('mongodb').MongoClient;
 const fs = require('fs');
 const path = require('path');
 
 //Config
-const config = require('./config/config_dev.js');
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-const sslOptions = config.sslOptions;
+const config = require('./config/config_devC9.js');
+//const sslOptions = config.sslOptions;
 
 //Init of express app
 const app = express();
@@ -48,12 +47,12 @@ app.get('/api/recent', (req, res) => {
 
 app.all('/*', (req, res) => {
     res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Page not found. Please submit shortened url or use /create/<url> to create a shortened url");
+    res.end("Page not found. Please submit a search query with the /api/imgsearch endpoint");
 });
 
 //Listening
-app.listen(8080);
-https.createServer(sslOptions, app).listen(443);
+app.listen(config.port);
+//https.createServer(sslOptions, app).listen(config.HTTPSPort);
 
 //Named function declarations
 function bingImageSearch(imgQueryObj) {

@@ -11,8 +11,8 @@ module.exports= {
     apiHost: "api.cognitive.microsoft.com",
     apiEndPoint: "/bing/v7.0/images/search",
     sslOptions: {
-        key: fs.readFileSync('./img-search-api/config/key.pem'),
-        cert: fs.readFileSync('./img-search-api/config/cert.pem'),
+        key: fs.readFileSync('./config/key.pem'),
+        cert: fs.readFileSync('./config/cert.pem'),
         passphrase: "securepassphrase",
     }
 }

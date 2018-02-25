@@ -1,6 +1,6 @@
 {
   "name": "img-search-api",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "API that accepts image search string and returns JSON formatted links and descriptions of images",
   "main": "index.js",
   "scripts": {
