@@ -4,6 +4,7 @@
   "description": "API that accepts image search string and returns JSON formatted links and descriptions of images",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
