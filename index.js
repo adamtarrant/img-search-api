@@ -1,6 +1,6 @@
 //NPM and Node Modules
 const express = require('express');
-//const https = require('https');
+const http = require('http');
 const mongo = require('mongodb').MongoClient;
 const fs = require('fs');
 const path = require('path');
@@ -56,6 +56,7 @@ app.listen(config.port);
 
 //Named function declarations
 function bingImageSearch(imgQueryObj) {
+    console.log('About to make Bing Api call promise');
     return new Promise((resolve, reject) => {
         let queryStringPath = config.apiEndPoint + '?q=' + encodeURIComponent(imgQueryObj.searchStr);
         if(imgQueryObj.count !== undefined && !isNaN(imgQueryObj.count)){queryStringPath += '&count=' + imgQueryObj.count}
@@ -69,11 +70,13 @@ function bingImageSearch(imgQueryObj) {
                 'Ocp-Apim-Subscription-Key': config.apiKey1
             }
         };
-
-        let req = https.request(requestParams, (bingResponse) => {
+        console.log('about to make http request to bing');
+        let req = http.request(requestParams, (bingResponse) => {
+            console.log('entered callback for http request');
             if (bingResponse) {
                 resolve(bingResponse);
             } else {
+                console.log('http request failed');
                 reject('http request failed');
             }
         });
