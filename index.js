@@ -2,12 +2,12 @@
 const express = require('express');
 const https = require('https');
 const mongo = require('mongodb').MongoClient;
-const fs = require('fs');
+//const fs = require('fs');
 const path = require('path');
 
 //Config
-const config = require('./config/config_devC9.js');
-const sslOptions = config.sslOptions;
+const config = require('./config/config_prod.js');
+//const sslOptions = config.sslOptions;
 
 //Init of express app
 const app = express();
@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 ///Route handlers
 app.get('/api/imgsearch', (req, res) => {
+    try {
     let queryObj = {
         searchStr: req.query.q,
         count: req.query.count,
@@ -34,6 +35,9 @@ app.get('/api/imgsearch', (req, res) => {
         })
         .catch(error => {throw error});
 
+} catch (err) {
+    console.log(err);
+}
 });
 
 app.get('/api/recent', (req, res) => {
@@ -100,11 +104,10 @@ function bingResponseHandler(bingResponse) {
             }
 
             bingResultsObj = JSON.parse(bingResultsObj);
-            
+
             console.log('bing results obj is' + bingResultsObj.value);
             let bingResultsArr = bingResultsObj.value;
             let imgSearchResults = [];
-            
             bingResultsArr.map(obj => {
                 obj = {
                     name: obj.name,
@@ -114,8 +117,9 @@ function bingResponseHandler(bingResponse) {
                 };
                 imgSearchResults.push(obj);
             });
-            
+
             resolve(JSON.stringify(imgSearchResults, null, "\t"));
+
         });
         bingResponse.on('error', function (err) {
             console.log('Error: ' + err.message);
