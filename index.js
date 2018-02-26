@@ -1,19 +1,18 @@
 //NPM and Node Modules
 const express = require('express');
-const http = require('http');
+const https = require('https');
 const mongo = require('mongodb').MongoClient;
 const fs = require('fs');
 const path = require('path');
 
 //Config
-const config = require('./config/config_prod.js');
-//const sslOptions = config.sslOptions;
+const config = require('./config/config_devC9.js');
+const sslOptions = config.sslOptions;
 
 //Init of express app
 const app = express();
 
 //Static middleware
-//app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 ///Route handlers
@@ -71,13 +70,13 @@ function bingImageSearch(imgQueryObj) {
             }
         };
         console.log('about to make http request to bing');
-        let req = http.request(requestParams, (bingResponse) => {
+        let req = https.request(requestParams, (bingResponse) => {
             console.log('entered callback for http request');
             if (bingResponse) {
                 resolve(bingResponse);
             } else {
-                console.log('http request failed');
-                reject('http request failed');
+                console.log('https request failed');
+                reject('https request failed');
             }
         });
         req.end();

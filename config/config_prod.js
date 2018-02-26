@@ -9,4 +9,9 @@ module.exports= {
     apiKey2: process.env.APIKEY2,
     apiHost: "api.cognitive.microsoft.com",
     apiEndPoint: "/bing/v7.0/images/search",
+    sslOptions: {
+      key: fs.readFileSync('./config/key.pem'),
+      cert: fs.readFileSync('./config/cert.pem'),
+      passphrase: process.env.PASSPHRASE,
+     }
 }
