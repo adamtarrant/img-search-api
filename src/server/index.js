@@ -6,14 +6,14 @@ const mongo = require('mongodb').MongoClient;
 const path = require('path');
 
 //Config
-const config = require('./config/config_prod.js');
+const config = require('./config/config_devC9.js');
 //const sslOptions = config.sslOptions;
 
 //Init of express app
 const app = express();
 
 //Static middleware
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../public')));
 
 ///Route handlers
 app.get('/api/imgsearch', (req, res) => {
