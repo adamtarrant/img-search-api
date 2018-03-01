@@ -23,10 +23,10 @@ class SearchImg extends Component {
   let url = "https://search-img-api.herokuapp.com/api/imgsearch?q=" + this.state.submit;
       console.log('about to fetch')
       fetch(url)
-      .then(response => {return response.json()})
+      .then(response => {return response.text()})
       .then(data => {
         console.log(data);
-        this.setState({results: JSON.stringify(data, null, "\t")});
+        this.setState({results: data});
         console.log('fetched!');
       }).catch(error => {throw error});
     
@@ -56,7 +56,7 @@ class SearchImgOutput extends Component {
     return (
     <div>
       <h2>Output:</h2>
-      <results>{this.props.searchResults}</results>
+      <pre>{this.props.searchResults}</pre>
     </div>
       );
   }
