@@ -26,7 +26,7 @@ class SearchImg extends Component {
       .then(response => {return response.json()})
       .then(data => {
         console.log(data);
-        this.setState({results: data});
+        this.setState({results: JSON.stringify(data, null, "\t")});
         console.log('fetched!');
       }).catch(error => {throw error});
     
