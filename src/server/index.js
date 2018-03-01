@@ -13,7 +13,9 @@ const config = require('./config/config_devC9.js');
 const app = express();
 
 //Static middleware
+app.use((req,res,next) => {res.setHeader('Access-Control-Allow-Origin', '*'); next();});
 app.use(express.static(path.join(__dirname, '../../public')));
+
 
 ///Route handlers
 app.get('/api/imgsearch', (req, res) => {

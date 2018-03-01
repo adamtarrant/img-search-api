@@ -20,14 +20,14 @@ class SearchImg extends Component {
   
   handleSubmit(event){
     event.preventDefault();
-  let url = "https://search-img-api.herokuapp.com/api/imgsearch?q=" + this.state.submit;
+  let url = "https://9f3af2f0c58648209ba33b6cba9ca7c8.vfs.cloud9.us-east-2.amazonaws.com/api/imgsearch?q=" + this.state.submit;
       console.log('about to fetch')
       fetch(url)
-      .then(response => response.json())
+      .then(response => {return response.json()})
       .then(data => {
         this.setState({results: data});
         console.log('fetched!');
-      });
+      }).catch(error => {throw error});
     
   }
   
