@@ -23,7 +23,7 @@ class SearchImg extends Component {
   let url = "https://search-img-api.herokuapp.com/api/imgsearch?q=" + this.state.submit;
       console.log('about to fetch')
       fetch(url)
-      .then(response => {return response.text()})
+      .then(response => {return response.clone()})
       .then(data => {
         this.setState({results: data});
         console.log('fetched!');
