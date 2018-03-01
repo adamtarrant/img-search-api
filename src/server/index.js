@@ -6,7 +6,7 @@ const mongo = require('mongodb').MongoClient;
 const path = require('path');
 
 //Config
-const config = require('./config/config_devC9.js');
+const config = require('./config/config_prod.js');
 //const sslOptions = config.sslOptions;
 
 //Init of express app
