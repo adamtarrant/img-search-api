@@ -13,7 +13,9 @@ const config = require('./config/config_prod.js');
 const app = express();
 
 //Static middleware
-app.use(express.static(path.join(__dirname, 'public')));
+app.use((req,res,next) => {res.setHeader('Access-Control-Allow-Origin', '*'); next();});
+app.use(express.static(path.join(__dirname, '../../public')));
+
 
 ///Route handlers
 app.get('/api/imgsearch', (req, res) => {
@@ -62,8 +64,8 @@ function bingImageSearch(imgQueryObj) {
     console.log('About to make Bing Api call promise');
     return new Promise((resolve, reject) => {
         let queryStringPath = config.apiEndPoint + '?q=' + encodeURIComponent(imgQueryObj.searchStr);
-        if(imgQueryObj.count !== undefined && !isNaN(imgQueryObj.count)){queryStringPath += '&count=' + imgQueryObj.count}
-        if(imgQueryObj.offset !== undefined && !isNaN(imgQueryObj.offset)){queryStringPath += '&offset=' + imgQueryObj.offset}
+        if(!isNaN(parseInt(imgQueryObj.count))) {queryStringPath += '&count=' + imgQueryObj.count}
+        if(!isNaN(parseInt(imgQueryObj.offset))) {queryStringPath += '&offset=' + imgQueryObj.offset}
 
         let requestParams = {
             method: 'GET',
