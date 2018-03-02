@@ -1,10 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Krona+One|Poppins');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
 body {
-  background: #ACCEEC;
-  color: #005CC5;
+  background: #F7F7F7;
+  font-family: 'Krona One', sans-serif;
+  font-size: 12px;
+  margin: 0px;
+}
+
+h1 {
   text-align: center;
 }
 
-pre {
-  margin: auto;
-  text-align: left;
+button {
+    border: 2px solid #508ABA;
+    border-radius: 5px;
+    background-color: #AFC9DF;
+    font-family: 'Krona One', sans-serif;
+    box-shadow: 3px 3px 10px grey;
+      &:hover {
+        color: white;
+        background-color: #508ABA;
+        cursor: pointer;
+        box-shadow: 1px 1px 5px grey;
+      }
 }
+
+.upper-container {
+  display: flex;
+  flex-direction: column;
+  height: 30vh;
+  min-height: 250px;
+  background-color: #DCEAEA;
+  
+}
+
+.params-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80vw;
+  max-width: 1100px;
+  margin: auto;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  span {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px 0 0;
+  }
+  
+  label {
+      text-align: center;
+  }
+}
+
+.url-segments {
+  padding-top: 8px;
+  font-size: 1.05em;
+
+}
+
+
+.submit-button {
+     margin: auto;
+     width: 100%;
+     height: 40px;
+   }
+
+#count-input, #offset-input {
+  width: 50px;
+}
+
+.recent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #DCEAEA;
+  min-height: 100px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15em;
+  p {
+    margin-right: 10px;
+  }
+}
+
+.recent-button {
+  width: 100px;
+}
+
+.output-container {
+  width: 80vw;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.output {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  text-align: left;
+  background-color: #4F4F4F;
+    color: #F7F7F7;
+  border: 3px solid grey;
+  box-shadow: 3px 3px 10px grey;
+}
+
+.example-container {
+  width: 80vw;
+  max-width: 600px;
+  margin: auto;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.4em;
+  pre {
+      overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  background-color: #4F4F4F;
+    color: #F7F7F7;
+  border: 3px solid grey;
+  box-shadow: 3px 3px 10px grey;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7em;
+  }
+  
+  h2, h3 {
+    color: #4EA3A3;
+  }
+  
+  
+}
+

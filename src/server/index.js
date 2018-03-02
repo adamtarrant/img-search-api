@@ -64,8 +64,8 @@ function bingImageSearch(imgQueryObj) {
     console.log('About to make Bing Api call promise');
     return new Promise((resolve, reject) => {
         let queryStringPath = config.apiEndPoint + '?q=' + encodeURIComponent(imgQueryObj.searchStr);
-        if(imgQueryObj.count !== undefined && !isNaN(imgQueryObj.count)){queryStringPath += '&count=' + imgQueryObj.count}
-        if(imgQueryObj.offset !== undefined && !isNaN(imgQueryObj.offset)){queryStringPath += '&offset=' + imgQueryObj.offset}
+        if(!isNaN(parseInt(imgQueryObj.count))) {queryStringPath += '&count=' + imgQueryObj.count}
+        if(!isNaN(parseInt(imgQueryObj.offset))) {queryStringPath += '&offset=' + imgQueryObj.offset}
 
         let requestParams = {
             method: 'GET',
