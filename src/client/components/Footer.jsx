@@ -16,7 +16,7 @@ export default class Footer extends Component {
             minHeight: "50px",
             backgroundColor: "rgba(0, 0, 0, 0.4)",
             color: "#fff",
-            fontSize: "0.8em"
+            fontSize: "1.2em"
             };
             
         return (
