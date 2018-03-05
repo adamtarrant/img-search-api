@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import callApi from '../callApi.js';
+import Footer from './Footer.jsx';
 
 class SearchImg extends Component {
   constructor(props){
@@ -167,6 +168,7 @@ export default class App extends Component {
       <div>
       <SearchImg />
       <ExampleSection />
+      <Footer />
       </div>
       );
   }
