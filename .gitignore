@@ -71,4 +71,4 @@ data
 
 #configuration
 src/server/config/config_dev.js
-src/server/config/config_devc9.js
+src/server/config/config_devC9.js
