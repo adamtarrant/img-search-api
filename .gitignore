@@ -68,3 +68,7 @@ data
 
 # key and certs
 *.pem
+
+#configuration
+src/server/config/config_dev.js
+src/server/config/config_devc9.js
